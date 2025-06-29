@@ -1,0 +1,59 @@
+{% include 'sitio/cabecera.html' %}
+
+
+<style>
+    .image-container img {
+        width: 100%;
+        height: 250px; /* Tamaño uniforme */
+        object-fit: cover; /* Ajusta la imagen sin distorsión */
+        border-radius: 10px; /* Bordes redondeados para estética */
+    }
+</style>
+
+
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <!-- Imagen a la izquierda -->
+        <div class="col-md-4">
+            <img src="https://cdn.pixabay.com/photo/2024/04/09/03/04/ai-generated-8684869_1280.jpg" 
+                class="img-fluid rounded shadow-sm" 
+                alt="Equipo de la Biblioteca">
+        </div>
+
+        <!-- Texto a la derecha -->
+        <div class="col-md-8">
+            <div class="card p-4 border-0">
+                <h2 class="card-title text-primary">Sobre Nosotros</h2>
+                <p class="card-text text-secondary">
+                    <br>
+                    Nuestra misión es ofrecer una plataforma intuitiva y accesible, donde puedas explorar una amplia variedad de títulos, desde clásicos hasta los últimos lanzamientos. Nos enfocamos en brindar una experiencia interactiva que permita a cada usuario descubrir su próxima gran lectura de manera sencilla y entretenida.
+                    <br>
+                    Detrás de esta librería digital, hay un equipo apasionado que trabaja día a día para acercar el conocimiento a más personas. Creemos en el poder de la lectura para transformar vidas y fomentar el crecimiento personal y profesional.
+
+                </p>
+                <button class="btn btn-primary mt-3"><a href="/libros">Descubre Más</a></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collage de imágenes -->
+    <div class="row mt-5 image-container">
+        <div class="col-md-4">
+            <img src="https://i2.wp.com/www.programmer-books.com/wp-content/uploads/2018/05/Beginning-Programming-with-Python.png?w=768&ssl=1" 
+            alt="Libros 1">
+        </div>
+        <div class="col-md-4">
+            <img src="https://cssbooks.net/wp-content/uploads/2023/08/English-Grammar-in-Use-By-Raymond-Murphy-Cambridge-Fifth-Edition-1024x1024.png" 
+            alt="Libros 2">
+        </div>
+        <div class="col-md-4">
+            <img src="https://th.bing.com/th/id/OIP.P9YLrMwz-THUbrC7Oo8hUAAAAA?cb=iwp2&rs=1&pid=ImgDetMain" 
+            alt="Libros 3">
+        </div>
+    </div>
+</div>
+
+
+<br>
+<br>
+{% include 'sitio/pie.html' %}

@@ -1,0 +1,67 @@
+{% include 'sitio/cabecera.html' %}
+
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header text-center">
+                    <i class="fa-solid fa-user-plus"></i> Registro de Usuario
+                </div>
+                <div class="card-body">
+                    <form action="/registrouser" method="post">
+                        <div class="mb-3">
+                            <label for="txtIdUsuario" class="form-label">ID Usuario:</label>
+                            <input type="text" class="form-control" name="txtIdUsuario" id="txtIdUsuario" placeholder="Ingrese su ID">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="txtNombre" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Ingrese su Nombre">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="txtFechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+                            <input type="date" class="form-control" name="txtFechaNacimiento" id="txtFechaNacimiento">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="txtEmail" class="form-label">Correo Electrónico:</label>
+                            <input type="email" class="form-control" name="txtEmail" id="txtEmail" placeholder="Ingrese su Email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="txtContraseña" class="form-label">Contraseña:</label>
+                            <input type="password" class="form-control" name="txtContraseña" id="txtContraseña" placeholder="Ingrese su Contraseña">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fa-solid fa-user-check"></i> Registrarse
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center mt-3">
+    <p>¿Ya tienes una cuenta?</p>
+    <a href="/loginuser" class="btn btn-link text-primary">
+        <i class="fa-solid fa-sign-in-alt"></i> Inicia sesión aquí
+    </a>
+</div>
+
+
+{% with mensajes = get_flashed_messages(with_categories=true) %}
+    {% if mensajes %}
+        {% for categoria, mensaje in mensajes %}
+            <div class="alert alert-{{ categoria }}">{{ mensaje }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+
+
+{% include 'sitio/pie.html' %}

@@ -1,0 +1,30 @@
+{% include 'admin/cabecera.html' %}
+
+<body>
+    <br>
+<div class="row align-items-md-stretch">
+    <div class="col-md-6">
+        <div
+            class="h-100 p-5 text-white bg-primary border rounded-3"
+        >
+            <h2>Bienvenido <strong> {{ session["usuario"] }} </strong></h2>
+            <p class="lead text-center">
+                Realiza las modificaciones que necesitas dando click en el boton de abajo
+            </p>
+            <a
+                name=""
+                id=""
+                class="btn btn-primary"
+                href="/admin/libros"
+                role="button"
+                >Empezar Gestion</a
+            >
+            
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+{% include 'admin/pie.html' %}

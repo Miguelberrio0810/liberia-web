@@ -1,0 +1,89 @@
+{% include 'sitio/cabecera.html' %}
+
+<style>
+.card {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    z-index: 10; /* Asegura que esté por encima */
+}
+
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+</style>
+
+
+<div class="row">
+    {% for libro in libros %}
+    <div class="col-md-4 d-flex justify-content-center mb-4"> <!-- Agregado mb-4 para mejor separación -->
+        <div class="card shadow p-3">
+            <img class="card-img-top rounded img-fluid" style="height: 300px; object-fit: cover;" src="/img/{{ libro[2] }}" alt="Imagen del libro">
+            <div class="card-body text-center">
+                <h4 class="card-title">{{ libro[1] }}</h4>
+                <p><strong>Género:</strong> <span class="text-primary">{{ libro[4] }}</span></p>
+                
+                <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+                    <a class="btn btn-info" href="/detalle/{{ libro[0] }}" role="button">
+                        <i class="fa-solid fa-eye"></i> Ver Detalle
+                    </a>
+
+                    {% if libro[5] == 0 %}
+                    <a class="btn btn-warning" href="/comprar/{{ libro[0] }}" role="button">
+                        <i class="fas fa-shopping-cart"></i> Comprar - ${{ libro[5] }}
+                    </a>
+                    {% else %}
+
+                    <a class="btn btn-primary" href="/leer/{{ libro[0] }}" role="button">
+                        <i class="fa-solid fa-book-open"></i> Leer
+                    </a>
+                    <a class="btn btn-success" href="/descargar/{{ libro[0] }}" role="button">
+                        <i class="fa-solid fa-download"></i> Descargar
+                    </a>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if session['usuario'] %}
+    <p>Usuario autenticado: {{ session['usuario'] }}</p>
+{% else %}
+    <p>No hay usuario en sesión</p>
+{% endif %}
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+{% include 'sitio/pie.html' %}

@@ -1,0 +1,26 @@
+{% include 'sitio/cabecera.html' %}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card shadow-lg">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">Confirmar Compra</h4>
+                </div>
+                <div class="card-body">
+                    <img src="/img/{{ libro[3] }}" class="img-fluid mb-3 rounded" style="max-height: 200px; object-fit: cover;">
+                    <h5 class="card-title">{{ libro[1] }}</h5>
+                    <p class="card-text">Precio: <strong>${{ libro[2] }}</strong></p>
+
+                    <a href="#" class="btn btn-success btn-lg mt-3">
+                        <i class="fas fa-credit-card"></i> Pagar Ahora
+                    </a>
+                    <br>
+                    <a href="/libros" class="btn btn-link mt-2">← Cancelar y volver al catálogo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'sitio/pie.html' %}
