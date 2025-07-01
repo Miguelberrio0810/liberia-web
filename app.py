@@ -68,14 +68,21 @@ def nosotros():
     return render_template('sitio/nosotros.html')
 
 # Ver detalle del libro
-@app.route('/detalle/<int:id_libro>')
-def detalle_libro(id_libro):
+@app.route('/detalle/<int:id>')
+def detalle_libro(id):
     conexion = mysql.connect()
     cursor = conexion.cursor()
-
-    sql = "SELECT id, nombre, imagen, url, genero, descripcion FROM libros WHERE id = %s"
-    cursor.execute(sql, (id_libro,))
+    cursor.execute("SELECT * FROM libros WHERE id = %s", (id,))
     libro = cursor.fetchone()
+    conexion.commit()
+
+    # Convertir a lista para poder modificar el campo precio
+    if libro:
+        libro = list(libro)
+        try:
+            libro[5] = float(libro[5])  # Asumiendo que libro[5] es el campo precio
+        except (ValueError, TypeError):
+            libro[5] = 0.00
 
     return render_template('sitio/detalle.html', libro=libro) if libro else redirect('/libros')
 
@@ -124,7 +131,7 @@ def descargar_libro(id_libro):
 
     return redirect(libro[0]) if libro else redirect('/libros')
 
-
+# Registro de usuario
 @app.route('/registrouser', methods=['GET', 'POST'])
 def registrouser():
     if request.method == 'POST':
@@ -281,9 +288,13 @@ def admin_libros_guardar():
     if _archivo.filename != "":
         nuevoNombre = horaActual + "_" + _archivo.filename
         _archivo.save("templates/sitio/img/" + nuevoNombre)
+        
+        
+        print("Precio recibido desde el formulario:", _precio)
+
 
     
-    sql = "INSERT INTO `libros` (`id`, `nombre`, `imagen`, `url`, `genero`, `precio`) VALUES (NULL, %s, %s, %s, %s, %s);"
+    sql = "INSERT INTO `libros` (`id`, `nombre`, `imagen`, `url`, `genero`, `precio`) VALUES (NULL, %s, %s, %s, %s, %s)"
     datos = (_nombre, nuevoNombre, _url, _genero, _precio)
 
     conexion = mysql.connect()

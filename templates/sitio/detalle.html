@@ -31,6 +31,15 @@
                         <a class="btn btn-primary" href="/leer/{{ libro[0] }}" role="button">
                             <i class="fa-solid fa-book-open"></i> Leer
                         </a>
+
+                        {% if libro[6]|float > 0 %}
+                            <a href="/pagar/{{ libro[0] }}" class="btn btn-warning">
+                                <i class="fa-solid fa-credit-card"></i> Comprar por ${{ libro[5]|round(2) }}
+                            </a>
+                        {% else %}
+                            <span class="badge bg-success">Gratis</span>
+                        {% endif %}
+
                         <a href="/libros" class="btn btn-secondary">
                             <i class="fa-solid fa-arrow-left"></i> Volver
                         </a>
