@@ -33,8 +33,8 @@
                         </a>
 
                         {% if libro[6]|float > 0 %}
-                            <a href="/pagar/{{ libro[0] }}" class="btn btn-warning">
-                                <i class="fa-solid fa-credit-card"></i> Comprar por ${{ libro[5]|round(2) }}
+                            <a href="/comprar/{{ libro[0] }}" class="btn btn-warning">
+                                <i class="fa-solid fa-credit-card"></i> Comprar por {{ "{:,.0f}".format(libro[6]) | replace(",", ".") }} COP
                             </a>
                         {% else %}
                             <span class="badge bg-success">Gratis</span>

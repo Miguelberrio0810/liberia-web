@@ -119,7 +119,7 @@
                     <a class="btn btn-success" href="{{ libro[3] }}" role="button">{{ libro[1] }}</a>
                 </td> <!-- URL -->
                 <td><a class="btn btn-info" href="#" role="button">{{ libro[4] }}</a></td> <!-- Género -->
-                <td class="text-success fw-bold">${{ libro[5]|round(2) }}</td> <!-- Precio -->
+                <td class="text-success fw-bold">${{ libro[6]|round(2) }}</td> <!-- Precio -->
                 <td>
                     <form action="/admin/libros/borrar" method="post">
                         <input value="{{ libro[0] }}" type="hidden" name="txtID">

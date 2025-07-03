@@ -1,5 +1,5 @@
 import os
-from flask import Flask, config, make_response
+from flask import Flask, abort, config, make_response
 from flask import render_template, request, redirect, session
 from flaskext.mysql import MySQL
 from datetime import datetime
@@ -80,9 +80,9 @@ def detalle_libro(id):
     if libro:
         libro = list(libro)
         try:
-            libro[5] = float(libro[5])  # Asumiendo que libro[5] es el campo precio
+            libro[6] = float(libro[6])  # Asumiendo que libro[5] es el campo precio
         except (ValueError, TypeError):
-            libro[5] = 0.00
+            libro[6] = 0.00
 
     return render_template('sitio/detalle.html', libro=libro) if libro else redirect('/libros')
 
@@ -113,6 +113,44 @@ def comprar_libro(id_libro):
     
     
     return render_template('sitio/comprar.html', libro=libro)
+
+
+
+@app.route('/formulariopago/<int:libro_id>')
+def formulariopago(libro_id):
+    conexion = mysql.connect()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT * FROM libros WHERE id = %s", (libro_id,))
+    libro = cursor.fetchone()
+    if not libro:
+        abort(404)
+    return render_template('sitio/formulariopago.html', libro=libro)
+
+
+
+# simulacion pago
+
+@app.route('/simular_pago', methods=['POST'])
+def simular_pago():
+    libro_id = request.form['libro_id']
+    valor = request.form['valor']
+    nombre = request.form['nombre']
+    email = request.form['email']
+    estado = "aprobado"  # Puedes alternar entre "aprobado", "rechazado", etc.
+
+    conexion = mysql.connect()
+    cursor = conexion.cursor()
+    sql = "INSERT INTO pagos (libro_id, nombre, email, valor, estado) VALUES (%s, %s, %s, %s, %s)"
+    datos = (libro_id, nombre, email, valor, estado)
+    cursor.execute(sql, datos)
+    conexion.commit()
+
+    flash("Pago simulado exitosamente. ¡Gracias por tu compra!", "success")
+    return redirect('/confirmacionpago')
+
+@app.route('/confirmacionpago')
+def confirmacion_pago():
+    return render_template('sitio/confirmacionpago.html')
 
 
 # Descargar libro
@@ -172,7 +210,7 @@ def registrouser():
 def loginuser():
     if request.method == 'POST':
         _usuario = request.form.get('txtIdUsuario')
-        _contraseña = request.form.get('txtContraseña')
+        _contraseña = request.form.get('txtContraseña').strip()
 
         conexion = mysql.connect()
         cursor = conexion.cursor()
@@ -257,11 +295,13 @@ def admin_libros():
     libros = [list(libro) for libro in libros]
     for libro in libros:
         try:
-            libro[5] = float(libro[5])
+            libro[6] = float(libro[6])
         except (ValueError, TypeError):
-            libro[5] = 0.00
+            libro[6] = 0.00
 
     return render_template('admin/libros.html', libros=libros)
+
+# Guardar libro
 
 @app.route('/admin/libros/guardar', methods=['POST'])
 def admin_libros_guardar():
@@ -272,6 +312,7 @@ def admin_libros_guardar():
     _url = request.form['txtURL']
     _archivo = request.files['txtImagen']
     _genero = request.form['txtGenero']
+    _descripcion = request.form['txtDescripcion']
     _precio = request.form['txtPrecio']
 
     try:
@@ -294,8 +335,8 @@ def admin_libros_guardar():
 
 
     
-    sql = "INSERT INTO `libros` (`id`, `nombre`, `imagen`, `url`, `genero`, `precio`) VALUES (NULL, %s, %s, %s, %s, %s)"
-    datos = (_nombre, nuevoNombre, _url, _genero, _precio)
+    sql = "INSERT INTO `libros` (`id`, `nombre`, `imagen`, `url`, `genero`, `descripcion`, `precio`) VALUES (NULL, %s, %s, %s, %s, %s, %s)"
+    datos = (_nombre, nuevoNombre, _url, _genero, _descripcion, _precio)
 
     conexion = mysql.connect()
     cursor = conexion.cursor()

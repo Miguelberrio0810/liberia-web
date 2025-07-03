@@ -1,0 +1,45 @@
+{% include 'sitio/cabecera.html' %}
+
+
+<form action="/simular_pago" method="POST">
+  <input type="hidden" name="libro_id" value="{{ libro[0] }}">
+  <input type="hidden" name="valor" value="{{ libro[6] }}">
+
+
+  <div class="mb-3">
+  <label class="form-label">Producto</label>
+  <input type="text" class="form-control" value="{{ libro[1] }}" disabled>
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Precio</label>
+  <input type="text" class="form-control fw-bold text-success"
+         value="${{ "{:,.0f}".format(libro[6]) | replace(",", ".") }} COP" disabled>
+</div>
+
+
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre del titular</label>
+    <input type="text" class="form-control" name="nombre" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Correo electrónico</label>
+    <input type="email" class="form-control" name="email" required>
+  </div>
+
+
+  <div class="mb-3">
+  <label for="metodo" class="form-label">Método de pago</label>
+  <select class="form-select" name="metodo" required>
+    <option value="PSE">PSE</option>
+    <option value="Tarjeta">Tarjeta</option>
+  </select>
+</div>
+
+  <button type="submit" class="btn btn-success">Simular Pago</button>
+</form>
+
+
+
+{% include 'admin/pie.html' %}
